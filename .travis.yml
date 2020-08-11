@@ -20,12 +20,12 @@ after_success:
     - docker push abfmcdr/multi-worker
 deploy:
     edge: true
-    provider: elasticbeanstalk
-    region: us-east-2
-    app: multi-docker
-    env: multiDocker-env
-    bucket_name: elasticbeanstalk-us-east-2-818790130160
-    bucket_path: docker-multi
+    provider: "elasticbeanstalk"
+    region: "us-east-2"
+    app: "multi-docker"
+    env: "multiDocker-env"
+    bucket_name: "elasticbeanstalk-us-east-2-818790130160"
+    bucket_path: "docker-multi"
         on:
         branch: master
         access_key_id: $AWS_ACCESS_KEY
