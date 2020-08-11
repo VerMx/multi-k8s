@@ -13,11 +13,14 @@ after_success:
     - docker build -t abfmcdr/multi-nginx ./nginx
     - docker build -t abfmcdr/multi-server ./server
     - docker build -t abfmcdr/multi-worker ./worker
+ # Log in to the docker CLI
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin 
+  # Take those images and push them to docker hub
     - docker push abfmcdr/multi-client 
     - docker push abfmcdr/multi-nginx 
     - docker push abfmcdr/multi-server 
     - docker push abfmcdr/multi-worker
+
 deploy:
     edge: true
     provider: "elasticbeanstalk"
@@ -26,8 +29,8 @@ deploy:
     env: "multiDocker-env"
     bucket_name: "elasticbeanstalk-us-east-2-818790130160"
     bucket_path: "docker-multi"
-        on:
+    on:
         branch: master
-        access_key_id: $AWS_ACCESS_KEY
-        secret_access_key: $AWS_SECRET_KEY
-
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: $AWS_SECRET_KEY
