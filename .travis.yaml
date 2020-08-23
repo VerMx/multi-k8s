@@ -12,16 +12,16 @@ before_install:
   - gcloud component update kubectl
   - gcloud auth activate-service-account --key-file activate-service-account.json
   - gcloud config set project multi-k8s-287314
-  - gcloud config set compute/zone us-central1-c	
+  - gcloud config set compute/zone us-central1-a
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t abfmcdr/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true abfmcdr/docker-react npm run test
+  - docker run stephengrider/react-test npm test -- --coverage
 
 deploy:
   provider: script
-  script: bash .deploy.sh
+  script: bash ./deploy.sh
   on:
     branch: master
